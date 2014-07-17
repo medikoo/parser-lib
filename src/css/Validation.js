@@ -1,5 +1,8 @@
 //This file will likely change a lot! Very experimental!
 /*global Properties, ValidationTypes, ValidationError, PropertyValueIterator */
+
+var variablesRe = /^var\(--[a-z0-9\-]+\)$/;
+
 var Validation = {
 
     validate: function(property, value){
@@ -52,6 +55,12 @@ var Validation = {
         while (expression.hasNext() && count < max) {
             result = ValidationTypes.isAny(expression, types);
             if (!result) {
+                if (variablesRe.test(value.text)) {
+                    count++;
+                    result = true;
+                    expression.next();
+                    continue;
+                }
                 break;
             }
             count++;
