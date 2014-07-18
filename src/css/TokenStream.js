@@ -171,7 +171,11 @@ TokenStream.prototype = mix(new TokenStreamBase(), {
                  */
                 case "-":
                     if (reader.peek() == "-"){  //could be closing HTML-style comment
-                        token = this.htmlCommentEndToken(c, startLine, startCol);
+                        if (reader._input.slice(reader._cursor, reader._cursor + 2) === '->') {
+                            token = this.htmlCommentEndToken(c, startLine, startCol);
+                        } else {
+                            token = this.identOrFunctionToken(c, startLine, startCol);
+                        }
                     } else if (isNameStart(reader.peek())){
                         token = this.identOrFunctionToken(c, startLine, startCol);
                     } else {
