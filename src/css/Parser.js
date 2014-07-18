@@ -509,6 +509,12 @@ Parser.prototype = function(){
                     this._readWhitespace();
                     token = tokenStream.LT(1);
                     expression = this._expression();
+                    if ((token === tokenStream.LT(1)) && (token.value === 'var(')) {
+                        while (tokenStream.LT(1).value !== ')') {
+                            tokenStream.get();
+                        }
+                        tokenStream.get();
+                    }
                 }
 
                 tokenStream.mustMatch(Tokens.RPAREN);
