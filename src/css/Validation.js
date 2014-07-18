@@ -160,8 +160,16 @@ var Validation = {
 
         if (!result) {
             if (partial && expression.hasNext()) {
-                    part = expression.peek();
-                    throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
+                part = expression.peek();
+                if (variablesRe.test(part.text)) {
+                    expression.next();
+                    if (expression.hasNext()) {
+                        part = expression.next();
+                        throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
+                    }
+                    return;
+                }
+                throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
             } else {
                 throw new ValidationError("Expected (" + types + ") but found '" + value + "'.", value.line, value.col);
             }
