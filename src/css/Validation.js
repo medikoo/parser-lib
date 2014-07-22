@@ -110,6 +110,14 @@ var Validation = {
         if (!result) {
             if (expression.hasNext() && !expression.isFirst()) {
                 part = expression.peek();
+                if (variablesRe.test(part.text)) {
+                    expression.next();
+                    if (expression.hasNext()) {
+                        part = expression.next();
+                        throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
+                    }
+                    return;
+                }
                 throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
             } else {
                 part = expression.previous();
