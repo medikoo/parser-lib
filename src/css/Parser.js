@@ -127,6 +127,10 @@ Parser.prototype = function(){
                                 this._viewport();
                                 this._skipCruft();
                                 break;
+                            case Tokens.MOZ_DOCUMENT_SYM:
+                                this._mozDocument();
+                                this._skipCruft();
+                                break;
                             case Tokens.UNKNOWN_SYM:  //unknown @ rule
                                 tokenStream.get();
                                 if (!this.options.strict){
@@ -753,6 +757,66 @@ Parser.prototype = function(){
                         col:    col
                     });
 
+            },
+
+            _mozDocument: function(){
+                /*
+                 * media
+                 *   : MEDIA_SYM S* media_query_list S* '{' S* ruleset* '}' S*
+                 *   ;
+                 */
+                var tokenStream     = this._tokenStream,
+                    line,
+                    col,
+                    mediaList;//       = [];
+
+                //look for @media
+                tokenStream.mustMatch(Tokens.MOZ_DOCUMENT_SYM);
+                line = tokenStream.token().startLine;
+                col = tokenStream.token().startCol;
+
+                this._readWhitespace();
+                tokenStream.get();
+                if (tokenStream.token().value !== 'url-prefix(') {
+                    throw new SyntaxError("Unknown @ rule.", line, col);
+                }
+                tokenStream.get();
+                if (tokenStream.token().value !== ')') {
+                    throw new SyntaxError("Unknown @ rule.", line, col);
+                }
+                this._readWhitespace();
+
+                tokenStream.mustMatch(Tokens.LBRACE);
+                this._readWhitespace();
+
+                this.fire({
+                    type:   "startmozdocument",
+                    media:  mediaList,
+                    line:   line,
+                    col:    col
+                });
+
+                while(true) {
+                    if (tokenStream.peek() == Tokens.PAGE_SYM){
+                        this._page();
+                    } else if (tokenStream.peek() == Tokens.FONT_FACE_SYM){
+                        this._font_face();
+                    } else if (tokenStream.peek() == Tokens.VIEWPORT_SYM){
+                        this._viewport();
+                    } else if (!this._ruleset()){
+                        break;
+                    }
+                }
+
+                tokenStream.mustMatch(Tokens.RBRACE);
+                this._readWhitespace();
+
+                this.fire({
+                    type:   "endmozdocument",
+                    media:  mediaList,
+                    line:   line,
+                    col:    col
+                });
             },
 
             _operator: function(inFunction){
