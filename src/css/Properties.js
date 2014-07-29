@@ -1,4 +1,4 @@
-/*global Validation, ValidationTypes, ValidationError*/
+/*global Validation, ValidationTypes, ValidationError, variablesRe*/
 var Properties = {
 
     //A
@@ -170,6 +170,10 @@ var Properties = {
         while (expression.hasNext() && count < max) {
             valid = ValidationTypes.isAny(expression, simple);
             if (!valid) {
+                if (variablesRe.test(expression.peek().text)) {
+                    expression.next();
+                    continue;
+                }
 
                 if (expression.peek() == "/" && count > 0 && !slash) {
                     slash = true;
