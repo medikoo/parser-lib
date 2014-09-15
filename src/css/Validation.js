@@ -120,6 +120,17 @@ var Validation = {
                 }
                 throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
             } else {
+							  if (expression.hasNext()) {
+								    part = expression.peek();
+                    if (variablesRe.test(part.text)) {
+                        expression.next();
+                        if (expression.hasNext()) {
+                            part = expression.next();
+                            throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
+                        }
+                        return;
+                    }
+							  }
                 part = expression.previous();
                 if (comma && part == ",") {
                     throw new ValidationError("Expected end of value but found '" + part + "'.", part.line, part.col);
