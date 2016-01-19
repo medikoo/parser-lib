@@ -129,7 +129,7 @@ var ValidationTypes = {
         },
 
         "<color>": function(part){
-            return part.type == "color" || part == "transparent";
+            return part.type == "color" || part == "transparent" || part == "currentColor";
         },
 
         "<number>": function(part){
@@ -210,6 +210,10 @@ var ValidationTypes = {
 
         "<flex-wrap>": function(part){
             return ValidationTypes.isLiteral(part, "nowrap | wrap | wrap-reverse");
+        },
+        
+        "<feature-tag-value>": function(part){
+            return (part.type == "function" && /^[A-Z0-9]{4}$/i.test(part));
         }
     },
 

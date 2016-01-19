@@ -127,8 +127,8 @@ Parser.prototype = function(){
                                 this._viewport();
                                 this._skipCruft();
                                 break;
-                            case Tokens.MOZ_DOCUMENT_SYM:
-                                this._mozDocument();
+                            case Tokens.DOCUMENT_SYM:
+                                this._document();
                                 this._skipCruft();
                                 break;
                             case Tokens.UNKNOWN_SYM:  //unknown @ rule
@@ -372,6 +372,8 @@ Parser.prototype = function(){
                         this._font_face();
                     } else if (tokenStream.peek() == Tokens.VIEWPORT_SYM){
                         this._viewport();
+                    } else if (tokenStream.peek() == Tokens.DOCUMENT_SYM){
+                        this._document();
                     } else if (!this._ruleset()){
                         break;
                     }
@@ -535,6 +537,8 @@ Parser.prototype = function(){
                  *   ;
                  */
                 var tokenStream = this._tokenStream;
+
+                this._readWhitespace();
 
                 tokenStream.mustMatch(Tokens.IDENT);
 
@@ -759,41 +763,44 @@ Parser.prototype = function(){
 
             },
 
-            _mozDocument: function(){
+            _document: function(){
                 /*
-                 * media
-                 *   : MEDIA_SYM S* media_query_list S* '{' S* ruleset* '}' S*
+                 * document
+                 *   : DOCUMENT_SYM S*
+                 *     _document_function [ ',' S* _document_function ]* S*
+                 *     '{' S* ruleset* '}'
                  *   ;
                  */
-                var tokenStream     = this._tokenStream,
-                    line,
-                    col,
-                    mediaList;//       = [];
 
-                //look for @media
-                tokenStream.mustMatch(Tokens.MOZ_DOCUMENT_SYM);
-                line = tokenStream.token().startLine;
-                col = tokenStream.token().startCol;
+                var tokenStream = this._tokenStream,
+                    token,
+                    tt,
+                    functions = [],
+                    prefix = "";
+
+                tokenStream.mustMatch(Tokens.DOCUMENT_SYM);
+                token = tokenStream.token();
+                if (/^@\-([^\-]+)\-/.test(token.value)) {
+                    prefix = RegExp.$1;
+                }
 
                 this._readWhitespace();
-                tokenStream.get();
-                if (tokenStream.token().value !== 'url-prefix(') {
-                    throw new SyntaxError("Unknown @ rule.", line, col);
+                functions.push(this._document_function());
+
+                while(tokenStream.match(Tokens.COMMA)) {
+                    this._readWhitespace();
+                    functions.push(this._document_function());
                 }
-                tokenStream.get();
-                if (tokenStream.token().value !== ')') {
-                    throw new SyntaxError("Unknown @ rule.", line, col);
-                }
-                this._readWhitespace();
 
                 tokenStream.mustMatch(Tokens.LBRACE);
                 this._readWhitespace();
 
                 this.fire({
-                    type:   "startmozdocument",
-                    media:  mediaList,
-                    line:   line,
-                    col:    col
+                    type:      "startdocument",
+                    functions: functions,
+                    prefix:    prefix,
+                    line:      token.startLine,
+                    col:       token.startCol
                 });
 
                 while(true) {
@@ -803,6 +810,8 @@ Parser.prototype = function(){
                         this._font_face();
                     } else if (tokenStream.peek() == Tokens.VIEWPORT_SYM){
                         this._viewport();
+                    } else if (tokenStream.peek() == Tokens.MEDIA_SYM){
+                        this._media();
                     } else if (!this._ruleset()){
                         break;
                     }
@@ -812,11 +821,32 @@ Parser.prototype = function(){
                 this._readWhitespace();
 
                 this.fire({
-                    type:   "endmozdocument",
-                    media:  mediaList,
-                    line:   line,
-                    col:    col
+                    type:      "enddocument",
+                    functions: functions,
+                    prefix:    prefix,
+                    line:      token.startLine,
+                    col:       token.startCol
                 });
+            },
+
+            _document_function: function(){
+                /*
+                 * document_function
+                 *   : function | URI S*
+                 *   ;
+                 */
+
+                var tokenStream = this._tokenStream,
+                    value;
+
+                if (tokenStream.match(Tokens.URI)) {
+                    value = tokenStream.token().value;
+                    this._readWhitespace();
+                } else {
+                    value = this._function();
+                }
+
+                return value;
             },
 
             _operator: function(inFunction){

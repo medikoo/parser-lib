@@ -141,6 +141,23 @@
     }));
 
     suite.add(new ValidationTestCase({
+        property: "background-color",
+
+        valid: [
+            "red",
+            "#f00",
+            "inherit",
+            "transparent",
+            "currentColor"
+        ],
+
+        invalid: {
+            "foo" : "Expected (<color> | inherit) but found 'foo'.",
+            "invert" : "Expected (<color> | inherit) but found 'invert'.",
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
         property: "background-image",
 
         valid: [
@@ -560,7 +577,8 @@
             "red",
             "#f00",
             "inherit",
-
+            "transparent",
+            "currentColor"
         ],
 
         invalid: {
@@ -589,6 +607,13 @@
             "table-caption",
             "grid",
             "inline-grid",
+            "run-in",
+            "ruby",
+            "ruby-base",
+            "ruby-text",
+            "ruby-base-container",
+            "ruby-text-container",
+            "contents",
             "none",
             "inherit",
             "-moz-box",
@@ -617,7 +642,7 @@
         ],
 
         invalid: {
-            "foo" : "Expected (inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | grid | inline-grid | none | inherit | -moz-box | -moz-inline-block | -moz-inline-box | -moz-inline-grid | -moz-inline-stack | -moz-inline-table | -moz-grid | -moz-grid-group | -moz-grid-line | -moz-groupbox | -moz-deck | -moz-popup | -moz-stack | -moz-marker | -webkit-box | -webkit-inline-box | -ms-flexbox | -ms-inline-flexbox | flex | -webkit-flex | inline-flex | -webkit-inline-flex) but found 'foo'."
+            "foo" : "Expected (inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | grid | inline-grid | run-in | ruby | ruby-base | ruby-text | ruby-base-container | ruby-text-container | contents | none | inherit | -moz-box | -moz-inline-block | -moz-inline-box | -moz-inline-grid | -moz-inline-stack | -moz-inline-table | -moz-grid | -moz-grid-group | -moz-grid-line | -moz-groupbox | -moz-deck | -moz-popup | -moz-stack | -moz-marker | -webkit-box | -webkit-inline-box | -ms-flexbox | -ms-inline-flexbox | flex | -webkit-flex | inline-flex | -webkit-inline-flex) but found 'foo'."
         }
     }));
 
@@ -785,6 +810,25 @@
     });
 
     suite.add(new ValidationTestCase({
+        property: "text-align",
+
+        valid: [
+            "left",
+            "right",
+            "center",
+            "justify",
+            "match-parent",
+            "start",
+            "end",
+            "inherit"
+        ],
+
+        invalid: {
+            "foo" : "Expected (left | right | center | justify | match-parent | start | end | inherit) but found 'foo'."
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
         property: "text-rendering",
 
         valid: [
@@ -797,6 +841,52 @@
 
         invalid: {
             "foo" : "Expected (auto | optimizeSpeed | optimizeLegibility | geometricPrecision | inherit) but found 'foo'."
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
+        property: "object-fit",
+
+        valid: [
+            "fill",
+            "contain",
+            "cover",
+            "none",
+            "scale-down"
+        ],
+
+        invalid: {
+            "foo" : "Expected (fill | contain | cover | none | scale-down) but found 'foo'.",
+            "inherit" : "Expected (fill | contain | cover | none | scale-down) but found 'inherit'."
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
+        property: "object-position",
+
+        valid: [
+            "top",
+            "bottom",
+            "center",
+            "100%",
+            "left center",
+            "bottom left",
+            "left 10px",
+            "center bottom",
+            "10% top",
+            "left 10px bottom",
+            "right top 5%",
+            "top 3em center",
+            "center top 3em",
+            "top 3em right 10%",
+        ],
+
+        invalid: {
+            "foo"                 : "Expected (<bg-position>) but found 'foo'.",
+            "10% left"            : "Expected end of value but found 'left'.",
+            "left center right"   : "Expected end of value but found 'center'.",
+            "center 3em right 10%": "Expected end of value but found '3em'.",
+            "top, bottom"         : "Expected end of value but found ','."
         }
     }));
 
@@ -841,11 +931,16 @@
             "auto",
             "none",
             "pan-x",
-            "pan-y"
+            "pan-y",
+            "pan-left",
+            "pan-right",
+            "pan-up",
+            "pan-down"
+            "manipulation"
         ],
 
         invalid: {
-            "foo" : "Expected (auto | none | pan-x | pan-y) but found 'foo'."
+            "foo" : "Expected (auto | none | pan-x | pan-y | pan-left | pan-right | pan-up | pan-down | manipulation) but found 'foo'."
         }
     }));
 
@@ -856,11 +951,38 @@
             "auto",
             "none",
             "pan-x",
-            "pan-y"
+            "pan-y",
+            "pan-left",
+            "pan-right",
+            "pan-up",
+            "pan-down"
+            "manipulation"
         ],
 
         invalid: {
-            "foo" : "Expected (auto | none | pan-x | pan-y) but found 'foo'."
+            "foo" : "Expected (auto | none | pan-x | pan-y | pan-left | pan-right | pan-up | pan-down | manipulation) but found 'foo'."
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
+        property: "vertical-align",
+
+        valid: [
+            "baseline",
+            "sub",
+            "super",
+            "top",
+            "text-top",
+            "middle",
+            "bottom",
+            "text-bottom",
+            "25%",
+            "-1px",
+            "inherit"
+        ],
+
+        invalid: {
+            "foo" : "Expected (auto | use-script | baseline | sub | super | top | text-top | central | middle | bottom | text-bottom | <percentage> | <length> | inherit) but found 'foo'."
         }
     }));
 
@@ -929,6 +1051,25 @@
 
         invalid: {
             "foo" : "Expected (normal | break-word) but found 'foo'."
+        }
+    }));
+
+    suite.add(new ValidationTestCase({
+        property: "will-change",
+
+        valid: [
+            "auto",
+            "scroll-position",
+            "contents",
+            "opacity",
+            "transform",
+            "opacity, transform",
+            "height, opacity, transform, width"
+        ],
+
+        invalid: {
+            "2px"               : "Expected (<ident>) but found '2px'.",
+            "opacity transform" : "Expected end of value but found 'transform'."
         }
     }));
 

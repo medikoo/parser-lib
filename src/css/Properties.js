@@ -50,7 +50,7 @@ var Properties = {
     "-o-animation-name"                : { multi: "none | <ident>", comma: true },
     "-o-animation-play-state"          : { multi: "running | paused", comma: true },
 
-    "appearance"                    : "icon | window | desktop | workspace | document | tooltip | dialog | button | push-button | hyperlink | radio-button | checkbox | menu-item | tab | menu | menubar | pull-down-menu | pop-up-menu | list-menu | radio-group | checkbox-group | outline-tree | range | field | combo-box | signature | password | normal | none | inherit",
+    "appearance"                    : "icon | window | desktop | workspace | document | tooltip | dialog | button | push-button | hyperlink | radio | radio-button | checkbox | menu-item | tab | menu | menubar | pull-down-menu | pop-up-menu | list-menu | radio-group | checkbox-group | outline-tree | range | field | combo-box | signature | password | normal | none | inherit",
     "azimuth"                       : function (expression) {
         var simple      = "<angle> | leftwards | rightwards | inherit",
             direction   = "left-side | far-left | left | center-left | center | center-right | right | far-right | right-side",
@@ -218,6 +218,7 @@ var Properties = {
     "-moz-box-ordinal-group"        : "<integer>",
     "-moz-box-orient"               : "horizontal | vertical | inline-axis | block-axis | inherit",
     "-moz-box-pack"                 : "start | end | center | justify",
+    "-o-box-decoration-break"       : "slice | clone",
     "-webkit-box-align"             : "start | end | center | baseline | stretch",
     "-webkit-box-decoration-break"  : "slice |clone",
     "-webkit-box-direction"         : "normal | reverse | inherit",
@@ -227,6 +228,7 @@ var Properties = {
     "-webkit-box-ordinal-group"     : "<integer>",
     "-webkit-box-orient"            : "horizontal | vertical | inline-axis | block-axis | inherit",
     "-webkit-box-pack"              : "start | end | center | justify",
+    "box-decoration-break"          : "slice | clone",
     "box-shadow"                    : function (expression) {
         var result      = false,
             part;
@@ -272,7 +274,7 @@ var Properties = {
 
     //D
     "direction"                     : "ltr | rtl | inherit",
-    "display"                       : "inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | grid | inline-grid | none | inherit | -moz-box | -moz-inline-block | -moz-inline-box | -moz-inline-grid | -moz-inline-stack | -moz-inline-table | -moz-grid | -moz-grid-group | -moz-grid-line | -moz-groupbox | -moz-deck | -moz-popup | -moz-stack | -moz-marker | -webkit-box | -webkit-inline-box | -ms-flexbox | -ms-inline-flexbox | flex | -webkit-flex | inline-flex | -webkit-inline-flex",
+    "display"                       : "inline | block | list-item | inline-block | table | inline-table | table-row-group | table-header-group | table-footer-group | table-row | table-column-group | table-column | table-cell | table-caption | grid | inline-grid | run-in | ruby | ruby-base | ruby-text | ruby-base-container | ruby-text-container | contents | none | inherit | -moz-box | -moz-inline-block | -moz-inline-box | -moz-inline-grid | -moz-inline-stack | -moz-inline-table | -moz-grid | -moz-grid-group | -moz-grid-line | -moz-groupbox | -moz-deck | -moz-popup | -moz-stack | -moz-marker | -webkit-box | -webkit-inline-box | -ms-flexbox | -ms-inline-flexbox | flex | -webkit-flex | inline-flex | -webkit-inline-flex",
     "dominant-baseline"             : 1,
     "drop-initial-after-adjust"     : "central | middle | after-edge | text-after-edge | ideographic | alphabetic | mathematical | <percentage> | <length>",
     "drop-initial-after-align"      : "baseline | use-script | before-edge | text-before-edge | after-edge | text-after-edge | central | middle | ideographic | alphabetic | hanging | mathematical",
@@ -313,27 +315,45 @@ var Properties = {
     "float-offset"                  : 1,
     "font"                          : 1,
     "font-family"                   : 1,
+    "font-feature-settings"         : "<feature-tag-value> | normal | inherit",
+    "font-kerning"                  : "auto | normal | none | initial | inherit | unset",
     "font-size"                     : "<absolute-size> | <relative-size> | <length> | <percentage> | inherit",
     "font-size-adjust"              : "<number> | none | inherit",
     "font-stretch"                  : "normal | ultra-condensed | extra-condensed | condensed | semi-condensed | semi-expanded | expanded | extra-expanded | ultra-expanded | inherit",
     "font-style"                    : "normal | italic | oblique | inherit",
     "font-variant"                  : "normal | small-caps | inherit",
+    "font-variant-caps"             : "normal | small-caps | all-small-caps | petite-caps | all-petite-caps | unicase | titling-caps",
+    "font-variant-position"         : "normal | sub | super | inherit | initial | unset",
     "font-weight"                   : "normal | bold | bolder | lighter | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | inherit",
 
     //G
+    "grid"                          : 1,
+    "grid-area"                     : 1,
+    "grid-auto-columns"             : 1,
+    "grid-auto-flow"                : 1,
+    "grid-auto-position"            : 1,
+    "grid-auto-rows"                : 1,
     "grid-cell-stacking"            : "columns | rows | layer",
     "grid-column"                   : 1,
     "grid-columns"                  : 1,
     "grid-column-align"             : "start | end | center | stretch",
     "grid-column-sizing"            : 1,
+    "grid-column-start"             : 1,
+    "grid-column-end"               : 1,
     "grid-column-span"              : "<integer>",
     "grid-flow"                     : "none | rows | columns",
     "grid-layer"                    : "<integer>",
     "grid-row"                      : 1,
     "grid-rows"                     : 1,
     "grid-row-align"                : "start | end | center | stretch",
+    "grid-row-start"                : 1,
+    "grid-row-end"                  : 1,
     "grid-row-span"                 : "<integer>",
     "grid-row-sizing"               : 1,
+    "grid-template"                 : 1,
+    "grid-template-areas"           : 1,
+    "grid-template-columns"         : 1,
+    "grid-template-rows"            : 1,
 
     //H
     "hanging-punctuation"           : 1,
@@ -350,6 +370,7 @@ var Properties = {
     "image-orientation"             : "angle | auto",
     "image-rendering"               : 1,
     "image-resolution"              : 1,
+    "ime-mode"                      : "auto | normal | active | inactive | disabled | inherit",
     "inline-box-align"              : "initial | last | <integer>",
 
     //J
@@ -398,6 +419,8 @@ var Properties = {
     "nav-up"                        : 1,
 
     //O
+    "object-fit"                    : "fill | contain | cover | none | scale-down",
+    "object-position"               : "<bg-position>",
     "opacity"                       : "<number> | inherit",
     "order"                         : "<integer>",
     "-webkit-order"                 : "<integer>",
@@ -473,7 +496,7 @@ var Properties = {
     "target-name"                   : 1,
     "target-new"                    : 1,
     "target-position"               : 1,
-    "text-align"                    : "left | right | center | justify | inherit" ,
+    "text-align"                    : "left | right | center | justify | match-parent | start | end | inherit" ,
     "text-align-last"               : 1,
     "text-decoration"               : 1,
     "text-emphasis"                 : 1,
@@ -487,8 +510,8 @@ var Properties = {
     "text-transform"                : "capitalize | uppercase | lowercase | none | inherit",
     "text-wrap"                     : "normal | none | avoid",
     "top"                           : "<margin-width> | inherit",
-    "-ms-touch-action"              : "auto | none | pan-x | pan-y",
-    "touch-action"                  : "auto | none | pan-x | pan-y",
+    "-ms-touch-action"              : "auto | none | pan-x | pan-y | pan-left | pan-right | pan-up | pan-down | manipulation",
+    "touch-action"                  : "auto | none | pan-x | pan-y | pan-left | pan-right | pan-up | pan-down | manipulation",
     "transform"                     : 1,
     "transform-origin"              : 1,
     "transform-style"               : 1,
@@ -504,7 +527,7 @@ var Properties = {
     "user-select"                   : "none | text | toggle | element | elements | all | inherit",
 
     //V
-    "vertical-align"                : "auto | use-script | baseline | sub | super | top | text-top | central | middle | bottom | text-bottom | <percentage> | <length>",
+    "vertical-align"                : "auto | use-script | baseline | sub | super | top | text-top | central | middle | bottom | text-bottom | <percentage> | <length> | inherit",
     "visibility"                    : "visible | hidden | collapse | inherit",
     "voice-balance"                 : 1,
     "voice-duration"                : 1,
@@ -521,6 +544,7 @@ var Properties = {
     "white-space-collapse"          : 1,
     "widows"                        : "<integer> | inherit",
     "width"                         : "<length> | <percentage> | <content-sizing> | auto | inherit",
+    "will-change"                   : { multi: "<ident>", comma: true },
     "word-break"                    : "normal | keep-all | break-all",
     "word-spacing"                  : "<length> | normal | inherit",
     "word-wrap"                     : "normal | break-word",

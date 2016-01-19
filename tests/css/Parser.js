@@ -1458,26 +1458,50 @@
 
         testMozKeyFrames: function(){
             var parser = new Parser({strict:true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@-moz-keyframes movingbox{0%{left:90%;}50%{left:10%;}100%{left:90%;}}");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testKeyFrames: function(){
             var parser = new Parser({strict:true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@keyframes movingbox{0%{left:90%;}50%{left:10%;}100%{left:90%;}}");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testKeyFramesFromTo: function(){
             var parser = new Parser({strict:true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@keyframes movingbox{from{left:90%;-webkit-transform: rotate(0deg);}to{left:10%;-webkit-transform: rotate(360deg);}}");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testKeyFramesWithWhitespace: function(){
             var parser = new Parser({strict:true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@keyframes 'diagonal-slide' {  from { left: 0; top: 0; } to { left: 100px; top: 100px; } }");
-            Assert.isTrue(true);
+            Assert.isTrue(valid);
         }
 
     }));
@@ -1488,68 +1512,158 @@
 
         testMediaWithPage: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media { @page {} }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMediaWithFontFace: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media { @font-face {} }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
-	testMediaWithViewport: function(){
+        testMediaWithViewport: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media { @viewport {} }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMediaWithTypeOnly: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media print { }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMediaWithTypesOnly: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media print, screen { }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMediaWithSimpleExpression: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media (max-width:400px) { }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMediaWithComplexExpression: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@media all and (max-width:400px) { }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
+        },
+
+        testMediaWithSimpleExpressionWithSpaces: function(){
+            var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@media ( max-width:400px ) { }");
+            Assert.isTrue(valid);
+        },
+
+        testMediaWithComplexExpressionWithSpaces: function(){
+            var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@media all and ( max-width:400px ) { }");
+            Assert.isTrue(valid);
         },
 
         testViewport: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@viewport { width: 397px; }");
-            Assert.isTrue(true);  //just don't want an error
+            Assert.isTrue(valid);
         },
 
         testMSViewport: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@-ms-viewport { width: 397px; }");
-            Assert.isTrue(true);
+            Assert.isTrue(valid);
         },
 
         testMSViewportInsideDeviceWidth: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@-ms-viewport { width: device-width; }");
-            Assert.isTrue(true);
+            Assert.isTrue(valid);
         },
 
         testMSViewportInsideDeviceHeight: function(){
             var parser = new Parser({ strict: true});
+            var valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
             var result = parser.parse("@-ms-viewport { width: device-height; }");
-            Assert.isTrue(true);
+            Assert.isTrue(valid);
         },
 
         testViewportEventFires: function(){
@@ -1570,6 +1684,148 @@
             });
 
             var result = parser.parse("@viewport { width: 397px; }");
+            Assert.isTrue(calledStart);  //just don't want an error
+            Assert.isTrue(calledEnd);  //just don't want an error
+        },
+
+        testDocumentUrl: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url(http://www.w3.org/) { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentUrlPrefix: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix(http://www.w3.org/) { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentDomain: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document domain(w3.org) { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentRegexp: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document regexp('https:.*') { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentMultipleFunctions: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix(http://www.w3.org/), domain(w3.org) { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testMozDocument: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@-moz-document url-prefix() { p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentWithPage: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix() { @page {} p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentWithMedia: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix() { @media {} p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentWithFontFace: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix() { @font-face {} p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentWithViewport: function(){
+            var parser = new Parser({ strict: true}),
+                valid = true;
+
+            parser.addListener("error", function(event) {
+                valid = false;
+            });
+
+            var result = parser.parse("@document url-prefix() { @viewport {} p { color: red; } }");
+            Assert.isTrue(valid);
+        },
+
+        testDocumentEventFires: function(){
+            var parser = new Parser({ strict:true}),
+                calledStart = false,
+                calledEnd = false;
+
+            parser.addListener("startdocument", function(event) {
+                Assert.areEqual(1, event.line, "Line should be 1");
+                Assert.areEqual(1, event.col, "Column should be 1");
+                calledStart = true;
+            });
+
+            parser.addListener("enddocument", function(event) {
+                Assert.areEqual(1, event.line, "Line should be 1");
+                Assert.areEqual(1, event.col, "Column should be 1");
+                calledEnd = true;
+            });
+
+            var result = parser.parse("@document url-prefix() {}");
             Assert.isTrue(calledStart);  //just don't want an error
             Assert.isTrue(calledEnd);  //just don't want an error
         },
